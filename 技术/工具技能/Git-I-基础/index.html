@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Git I: 基础 | YLog</title><meta name="description" content="本文介绍当前最为流行和经典的版本控制系统Git的基础使用。"><meta name="author" content="YSY"><meta name="copyright" content="YSY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/v.png"><link rel="canonical" href="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-I-%E5%9F%BA%E7%A1%80/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Git I: 基础"><meta property="og:url" content="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-I-%E5%9F%BA%E7%A1%80/"><meta property="og:site_name" content="YLog"><meta property="og:description" content="本文介绍当前最为流行和经典的版本控制系统Git的基础使用。"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/8.jpg"><meta property="article:published_time" content="2021-02-06T11:00:49.000Z"><meta property="article:modified_time" content="2021-02-06T11:00:49.114Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '天',
+  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+    },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-06 19:00:49'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="https://at.alicdn.com/t/font_2055952_a63l0o7wd5p.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/css/custom_font.css"><meta name="generator" content="Hexo 5.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">8</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-zhuye"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-shijianzhou1"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-ziyuan"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa-fw iconfont icon-C"></i><span> 编程语言</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fa-fw iconfont icon-kuailianshishujujiegoucopy-1"></i><span> 数据结构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/"><i class="fa-fw iconfont icon-suanfaguanli"></i><span> 算法设计</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84/"><i class="fa-fw iconfont icon-yingjian3"></i><span> 硬件架构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="fa-fw iconfont icon-caozuoxitong"></i><span> 操作系统</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"><i class="fa-fw iconfont icon-wangluo2"></i><span> 网络技术</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/"><i class="fa-fw iconfont icon-git"></i><span> 工具技能</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E9%A3%8E%E6%A0%BC%E7%B4%A0%E5%85%BB/"><i class="fa-fw iconfont icon-fengge3"></i><span> 风格素养</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%A6%E8%83%BD%E5%8A%9B/"><i class="fa-fw iconfont icon-ic_shuxue"></i><span> 数学能力</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="fa-fw iconfont icon-shenjingwangluo"></i><span> 机器学习</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-xuexi"></i><span> 学习相关</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E4%BD%9C%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-gongzuo"></i><span> 工作相关</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-shenghuo2"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/"><i class="fa-fw iconfont icon-yuedu"></i><span> 阅读</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9F%B3%E4%B9%90/"><i class="fa-fw iconfont icon-yinle1"></i><span> 音乐</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E5%BD%B1%E8%A7%86/"><i class="fa-fw iconfont icon-yingshi2"></i><span> 影视</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%85%E8%A1%8C/"><i class="fa-fw iconfont icon-lvhang2"></i><span> 旅行</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E7%AC%94/"><i class="fa-fw iconfont icon-lanmulvshisuibi"></i><span> 随笔</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"><i class="fa-fw iconfont icon-yinsi"></i><span> 日记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie2"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyu2"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text"> 前言：版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.1.</span> <span class="toc-text"> 本地版本控制系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E5%8C%96%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text"> 集中化版本控制系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.</span> <span class="toc-text"> 分布式版本控制系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E7%AE%80%E5%8F%B2"><span class="toc-number">2.</span> <span class="toc-text"> Git简史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E6%A0%B8%E5%BF%83"><span class="toc-number">3.</span> <span class="toc-text"> Git核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E8%B5%B7%E6%AD%A5"><span class="toc-number">4.</span> <span class="toc-text"> Git起步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text"> Git配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E9%85%8D%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="toc-number">4.2.</span> <span class="toc-text"> Git配置变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="toc-number">4.2.1.</span> <span class="toc-text"> 用户信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">4.2.2.</span> <span class="toc-text"> 文本编辑器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">4.3.</span> <span class="toc-text"> 检查配置信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%AE%E5%8A%A9"><span class="toc-number">4.4.</span> <span class="toc-text"> 帮助</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git%E5%9F%BA%E7%A1%80"><span class="toc-number">5.</span> <span class="toc-text"> Git基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAgit%E4%BB%93%E5%BA%93"><span class="toc-number">5.1.</span> <span class="toc-text"> 创建Git仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6"><span class="toc-number">5.2.</span> <span class="toc-text"> 添加文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text"> 忽略文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%9B%B4%E6%96%B0"><span class="toc-number">5.4.</span> <span class="toc-text"> 提交更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="toc-number">5.5.</span> <span class="toc-text"> 删除文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="toc-number">5.6.</span> <span class="toc-text"> 移动文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2"><span class="toc-number">5.7.</span> <span class="toc-text"> 查看提交历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E6%93%8D%E4%BD%9C"><span class="toc-number">5.8.</span> <span class="toc-text"> 撤销操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">5.9.</span> <span class="toc-text"> 远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE"><span class="toc-number">5.10.</span> <span class="toc-text"> 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E5%90%8D"><span class="toc-number">5.11.</span> <span class="toc-text"> 别名</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/8.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YLog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-zhuye"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-shijianzhou1"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-ziyuan"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa-fw iconfont icon-C"></i><span> 编程语言</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fa-fw iconfont icon-kuailianshishujujiegoucopy-1"></i><span> 数据结构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/"><i class="fa-fw iconfont icon-suanfaguanli"></i><span> 算法设计</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84/"><i class="fa-fw iconfont icon-yingjian3"></i><span> 硬件架构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="fa-fw iconfont icon-caozuoxitong"></i><span> 操作系统</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"><i class="fa-fw iconfont icon-wangluo2"></i><span> 网络技术</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/"><i class="fa-fw iconfont icon-git"></i><span> 工具技能</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E9%A3%8E%E6%A0%BC%E7%B4%A0%E5%85%BB/"><i class="fa-fw iconfont icon-fengge3"></i><span> 风格素养</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%A6%E8%83%BD%E5%8A%9B/"><i class="fa-fw iconfont icon-ic_shuxue"></i><span> 数学能力</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="fa-fw iconfont icon-shenjingwangluo"></i><span> 机器学习</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-xuexi"></i><span> 学习相关</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E4%BD%9C%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-gongzuo"></i><span> 工作相关</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-shenghuo2"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/"><i class="fa-fw iconfont icon-yuedu"></i><span> 阅读</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9F%B3%E4%B9%90/"><i class="fa-fw iconfont icon-yinle1"></i><span> 音乐</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E5%BD%B1%E8%A7%86/"><i class="fa-fw iconfont icon-yingshi2"></i><span> 影视</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%85%E8%A1%8C/"><i class="fa-fw iconfont icon-lvhang2"></i><span> 旅行</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E7%AC%94/"><i class="fa-fw iconfont icon-lanmulvshisuibi"></i><span> 随笔</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"><i class="fa-fw iconfont icon-yinsi"></i><span> 日记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie2"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyu2"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Git I: 基础</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-06T11:00:49.000Z" title="发表于 2021-02-06 19:00:49">2021-02-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-06T11:00:49.114Z" title="更新于 2021-02-06 19:00:49">2021-02-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/">工具技能</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>Git是一个开源的分布式版本控制系统，可以有效、高速的处理从很小到非常大的项目版本管理，最初由Linus Torvalds着手开发，现在已成为一个广泛使用的版本控制工具。基于<strong>Scott Chacon、Ben Straub</strong>所著的<strong>Pro Git 2</strong>，本文将介绍Git的历史、特性与基础使用。</p>
+<h2 id="前言版本控制"><a class="markdownIt-Anchor" href="#前言版本控制"></a> 前言：版本控制</h2>
+<p>版本控制系统(<strong>VCS</strong>)是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。通过VCS，我们能轻松的回溯项目状态、比较文件变化细节、记录文件修改历史。在VCS的发展过程中，出现了几种典型的系统架构。</p>
+<h3 id="本地版本控制系统"><a class="markdownIt-Anchor" href="#本地版本控制系统"></a> 本地版本控制系统</h3>
+<p><img src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/20210204154626.png" alt="本地版本控制系统架构" /></p>
+<p>本地版本控制系统大多采用某种简单的数据库来记录文件的历次更新差异，其中最流行的一种叫做***RCS***，它的工作原理是在硬盘上保存补丁集（补丁是指文件修订前后的变化）；通过应用所有的补丁，可以重新计算出各个版本的文件内容。</p>
+<h3 id="集中化版本控制系统"><a class="markdownIt-Anchor" href="#集中化版本控制系统"></a> 集中化版本控制系统</h3>
+<p>集中化版本控制系统<strong>CVCS</strong>，如<strong>CVS</strong>、<strong>Subversion</strong>、<strong>Perforce</strong>都有一个单一的集中管理的服务器，保存所有文件的修订版本，协同工作的使用者都通过客户端连接到这台服务器，取出最新的文件或者提交更新。</p>
+<p>集中化版本控制系统一定程度上满足了用户协同工作的需求，而且管理员也可以轻松掌控每个开发者的权限，并且管理一个CVCS要远比在各个客户端上维护本地数据库更加易于实现；另一方面，CVCS高度依赖于中心服务器的管理，如果中心服务器发生故障，则所有用户都不能提交更新、协同工作；若中心服务器发生数据损坏或丢失，又没有做恰当备份，则项目的所有数据、包括变更历史都将丢失且不可恢复，只留下用户各自机器上过去保留的快照。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/20210204160339.png" alt="集中化版本控制系统" /></p>
+<h3 id="分布式版本控制系统"><a class="markdownIt-Anchor" href="#分布式版本控制系统"></a> 分布式版本控制系统</h3>
+<p>面对CVCS的限制和不足，分布式版本控制系统<strong>DVCS</strong>应运而生，在DVCS，如<strong>Git</strong>、<strong>Mercurial</strong>、<strong>Bazaar</strong>、<strong>Darcs</strong>中，客户端不只提取最新版本的文件快照，而是把代码仓库完整的镜像下来，因此，即使任一处服务器发生故障，事后都可以用任意一个镜像出来的本地仓库恢复。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/20210204160834.png" alt="分布式版本控制系统" /></p>
+<h2 id="git简史"><a class="markdownIt-Anchor" href="#git简史"></a> Git简史</h2>
+<p>Linux内核开源项目自2002开始使用一个专有的分布式版本控制系统BitKeeper来管理和维护代码，到2005年，BitKeeper收回了Linux内核社区免费使用BitKeeper的权力，使得Linux的缔造者Linus Torvalds 基于使用BitKeeper的经验教训，开发出一套开源的分布式版本系统——Git。</p>
+<h2 id="git核心"><a class="markdownIt-Anchor" href="#git核心"></a> Git核心</h2>
+<p>与其他版本控制系统相比，Git在保存和处理信息方面有着独特的方式。</p>
+<ol>
+<li>
+<p>直接记录快照，而非差异比较</p>
+<p>大部分系统以文件变更列表的方式存储信息，将它们保存的信息看做是一组基本文件和每个文件随时间逐步累积的差异。Git则把数据看做是对小型文件系统的一组快照，每次提交更新、或是保存状态时，Git会对当时的全部文件制作一个快照并保存这个快照的索引，为了高效，如果文件没有修改，Git不再重新存储该文件，而只是保留一个链接指向之前存储的文件。Git对待数据更像是一个<strong>快照流</strong>。</p>
+</li>
+<li>
+<p>近乎所有操作都是本地执行</p>
+<p>在Git中的绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其他计算机的信息，因此相比于CVCS在速度和用户体验上都更加优越。此外，即使在离线或者没有VPN时，本地计算机也能进行几乎所有操作：查看项目全部历史、修改项目文件、提交修改。</p>
+</li>
+<li>
+<p>Git保证完整性</p>
+<p>Git中所有数据在存储前都计算校验和，然后以校验和来引用数据。因此，如果在传送过程中丢失信息或者损坏文件，Git都能及时的检测和发现。Git使用SHA-1散列计算校验和，产生一个由40个十六进制字符(0-9和a-f)组成的字符串，散列基于的数据是文件中的内容或目录结构。在Git数据库中，保存的信息都是以文件内容的哈希值来索引，而不是文件名。</p>
+</li>
+<li>
+<p>Git一般只添加数据</p>
+<p>几乎所有Git操作都只往Git数据库中添加数据，很难让Git执行任何不可逆操作，或者让它以任何方式清除数据。一旦提交快照到Git中，就很难再丢失数据。</p>
+</li>
+<li>
+<p>Git的三种状态</p>
+<p>在Git中，文件存在三种状态：已提交(committed)、已修改(modified)、已暂存(staged)。</p>
+<ul>
+<li>已提交表示数据已经安全的保存在本地数据库中</li>
+<li>已修改表示修改了文件，但还没有保存到数据库中</li>
+<li>已暂存表示对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中</li>
+</ul>
+<p>文件的三种状态对应Git的三个工作区域：Git仓库、工作目录、暂存区域</p>
+<ul>
+<li>Git仓库目录是Git用来保存项目的元数据和对象数据库的地方（克隆仓库时，复制的就是这里的数据，一般为<code>.git</code>隐藏目录）</li>
+<li>工作目录是对项目的某个版本独立提取出来的内容，以供用户使用或修改</li>
+<li>暂存区域是一个文件，保存了下次将提交的文件列表信息，一般位于Git仓库目录中</li>
+</ul>
+<p>基本的Git工作流程是：</p>
+<ul>
+<li>在工作目录中修改文件</li>
+<li>暂存文件，将文件的快照放入暂存区域</li>
+<li>提交更新，找到暂存区域的文件，将快照永久性存储到Git仓库目录</li>
+</ul>
+</li>
+</ol>
+<h2 id="git起步"><a class="markdownIt-Anchor" href="#git起步"></a> Git起步</h2>
+<p>在系统安装Git后，通过<code>git init</code>即可创建一个Git仓库，然后需要立即进行相关配置，定制个人的Git环境。</p>
+<h3 id="git配置文件"><a class="markdownIt-Anchor" href="#git配置文件"></a> Git配置文件</h3>
+<p><code>git config</code>命令用于设置控制Git外观和行为的配置变量，这些变量存储在三个位置</p>
+<ul>
+<li>第一级别——<code>/etc/gitconfig</code>文件：包含系统上每一个用户及其所有仓库的通用配置，通过使用<code>--system</code>选项选择从该文件中设置配置变量</li>
+<li>第二级别——<code>~/.gitconfig或~/.config/git/config</code>文件：系统当前用户及所有仓库的配置，通过使用<code>--global</code>选项选择从该文件中设置配置变量</li>
+<li>第三级别——当前Git仓库目录中的<code>.git/config</code>文件：当前用户的当前使用仓库的配置</li>
+</ul>
+<p>自上而下，下级配置会覆盖上级配置，故<code>.git/config</code>是最有效力的配置文件</p>
+<h3 id="git配置变量"><a class="markdownIt-Anchor" href="#git配置变量"></a> Git配置变量</h3>
+<h4 id="用户信息"><a class="markdownIt-Anchor" href="#用户信息"></a> 用户信息</h4>
+<p>用户名称和邮件地址是Git配置的最首要的一步，因为用户信息会写到用户的每一次提交中，而且不可更改。配置用户名称和邮件地址的命令如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;John Doe&quot;</span><br><span class="line">git config --global user.email johndoe@example.com</span><br></pre></td></tr></table></figure>
+<p>如前所述，通过使用<code>--global</code>参数，这两条命令配置的用户信息会自动应用到该系统用户的所有Git仓库，除非他在某一个Git仓库中重新进行第三级别的配置</p>
+<h4 id="文本编辑器"><a class="markdownIt-Anchor" href="#文本编辑器"></a> 文本编辑器</h4>
+<p>Git中某些操作需要输入文本内容，因此需要通过文本编辑器打开，默认情况下，Git使用Vim，通过<code>core.editor</code>属性，用户可以配置文本编辑器，在Windows下，若想使用sublime text打开，则可进行如下配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config core.editor &quot;D:/&#x27;Sublime Text 3&#x27;/sublime_text.exe -n -w&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="检查配置信息"><a class="markdownIt-Anchor" href="#检查配置信息"></a> 检查配置信息</h3>
+<p>通过<code>git config --list</code>命令可以列出Git当时能找到的全部配置，包括三个级别的全部配置信息</p>
+<p>通过<code>git config &lt;key&gt;</code>命令可以返回Git的某一项配置</p>
+<h3 id="帮助"><a class="markdownIt-Anchor" href="#帮助"></a> 帮助</h3>
+<p>通过3种方式可以找到Git命令的使用手册</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git help &lt;verb&gt;</span><br><span class="line">git &lt;verb&gt; --help</span><br><span class="line">man git-&lt;verb&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="git基础"><a class="markdownIt-Anchor" href="#git基础"></a> Git基础</h2>
+<h3 id="创建git仓库"><a class="markdownIt-Anchor" href="#创建git仓库"></a> 创建Git仓库</h3>
+<p>在Git中，有两种方式创建一个Git仓库。</p>
+<ol>
+<li>
+<p>在现有目录中初始化仓库</p>
+<p>通过执行<code>git init</code>命令，Git会在当前目录中创建<code>.git</code>子目录，该子目录包含一个Git仓库所需的全部文件，是仓库的骨干。</p>
+</li>
+<li>
+<p>克隆已有的仓库</p>
+<p>通过执行<code>git clone [url]</code>命令，Git会将该url表示的仓库克隆到本地，注意，克隆的是原仓库的全部版本和文件，而不仅仅是某一个特定版本；Git支持多种数据传输协议：包括HTTPS、GIT、SSH</p>
+</li>
+</ol>
+<h3 id="添加文件"><a class="markdownIt-Anchor" href="#添加文件"></a> 添加文件</h3>
+<p>如前所述，Git中文件存在三种状态：已提交、已修改、已暂存；事实上，这三种状态的前提是该文件已经被纳入Git管理；在这三种状态的上一层次上，工作目录中的每一个文件实际上不外乎两种状态：已跟踪和未跟踪。</p>
+<ul>
+<li>已跟踪的文件：纳入版本控制管理，要么之前被提交过，要么正处于暂存区</li>
+<li>未跟踪的文件：不存在上次快照的记录中、也不在寄存区中 、或者通过命令删除</li>
+</ul>
+<p>通过<code>git status</code>命令，我们可以方便的查看当前工作目录内全部的文件状态</p>
+<p>通过<code>git status -s或者--short</code>命令，可以得到输出的紧凑版格式，其中</p>
+<ul>
+<li><code>??</code>表示未跟踪文件</li>
+<li><code>A</code>表示<strong>新</strong>添加到暂存区域</li>
+<li>左侧<code>M</code>表示文件已修改且放入暂存区域</li>
+<li>右侧<code>M</code>表示文件已修改但还未放入暂存区域</li>
+</ul>
+<p>通过<code>git add</code>命令，可以将一个未跟踪的文件变为跟踪状态、并处于暂存状态；同时也可以将一个已追踪且修改的文件状态转为暂存状态；总体来说，<code>git add</code>命令将文件添加到下一次提交的暂存区域中</p>
+<h3 id="忽略文件"><a class="markdownIt-Anchor" href="#忽略文件"></a> 忽略文件</h3>
+<p>默认情况下，Git输出工作目录内的全部文件信息，包括已追踪和未追踪文件；为了将某些文件彻底被Git忽略（即不出现在未追踪文件中），可以创建一个<code>.gitignore</code>文件，列出要忽略的文件模式（正则匹配），<code>.gitignore</code>的格式规范如下</p>
+<ul>
+<li>所有空行或者以<code>#</code>开头的行都会被Git忽略</li>
+<li>可以使用标准的glob模式匹配
+<ul>
+<li>一个星号<code>*</code>匹配<strong>零个或多个</strong>任意字符</li>
+<li><code>[abc]</code>匹配任何<strong>一个</strong>方括号中的字符，可以使用连字符-表示范围</li>
+<li><code>?</code>只匹配<strong>一个</strong>任意字符</li>
+<li>两个星号<code>**</code>表示匹配任意(零或多个)中间目录</li>
+</ul>
+</li>
+<li>匹配模式可以以<code>/</code>开头防止递归</li>
+<li>匹配模式可以以<code>/</code>结尾指定目录</li>
+<li>匹配模式前加上<code>!</code>表示取反</li>
+</ul>
+<h3 id="提交更新"><a class="markdownIt-Anchor" href="#提交更新"></a> 提交更新</h3>
+<p>通过命令<code>git commit</code>，Git会将暂存区域中的文件提交，同时启动文本编辑器（即之前通过<code>git config core.editor</code>设置的配置变量）以便输入本次提交的<strong>说明</strong>；打开后文本编辑器会以注释的方式显示本次变动的文件有哪些（通过<code>-v</code>选项可以显示本次变动的行有哪些）</p>
+<p>通过添加<code>-m</code>选项，可以将提交信息与命令放在同一行，不必打开文本编辑器</p>
+<p><strong>每一次运行提交操作，都是对项目做一次快照</strong>，以后可以回到这个状态，或者进行比较</p>
+<p>通过添加<code>-a</code>选项，Git会自动把所有已经跟踪过的文件暂存起来一并提交；即此时提交的是工作目录中的最新文件；这个选项对于我们多次手动删除文件，却忘记通过<code>git rm</code>命令在Git中删除很有帮助，因为Git会自动把这些已经删除的文件标记为删除，而不是将其作为“已修改未暂存”状态</p>
+<h3 id="删除文件"><a class="markdownIt-Anchor" href="#删除文件"></a> 删除文件</h3>
+<p>通过命令<code>git rm</code>，Git会将文件从已跟踪列表（确切地说，是暂存区域）中删除，具体来说，有以下几种情况</p>
+<ul>
+<li>对于已经提交的文件，未修改时，通过<code>git rm</code>命令可以将文件从暂存区域和工作目录中删除</li>
+<li>手工删除文件后，直接通过<code>git rm &lt;file&gt;</code>删除，则Git不再追踪；否则，文件处于已更新未暂存</li>
+<li>对于修改且暂存的文件，通过<code>git rm -f &lt;file&gt;</code>，将文件强制从工作目录中删除，并不再追踪</li>
+<li>通过<code>git rm --cached &lt;file&gt;</code>，将文件从暂存区域中删除，但仍保留在工作目录中，文件处于未跟踪状态</li>
+</ul>
+<h3 id="移动文件"><a class="markdownIt-Anchor" href="#移动文件"></a> 移动文件</h3>
+<p>通过<code>git mv</code>命令，实现文件的移动（或重命名）</p>
+<p>实际上，Git并不追踪文件的移动操作，<code>git mv</code>命令相当于三条命令的组合：<code>mv+rm+add</code></p>
+<h3 id="查看提交历史"><a class="markdownIt-Anchor" href="#查看提交历史"></a> 查看提交历史</h3>
+<p>通过<code>git log</code>命令，可以查看仓库的全部提交历史，默认情况下，会按提交时间列出所有的更新，最近的更新排在最上面，列出的信息包括每个提交的SHA-1校验和、作者名字和邮件地址、提交时间和提交说明</p>
+<p>通过添加一些选项，可以获得更加详细的历史信息</p>
+<ul>
+<li><code>-p</code>选项可以显示每次提交的内容差异</li>
+<li><code>-2</code>选项可以显示最近两次提交</li>
+<li><code>--since=2.weeks</code>：两周以来的提交</li>
+<li><code>--until=2.weeks</code>：两周之前的提交</li>
+<li><code>--author</code>：指定作者</li>
+<li><code>--grep=word</code>：搜索提交说明的关键字</li>
+<li><code>-Sword</code>：仅显示添加或删除word的提交</li>
+<li><code>--stat</code>选项可以输出统计信息：多少文件被修改、哪些行被移除或添加</li>
+<li><code>--pretty=style</code>选项指定特定格式显示提交历史，其中style可以是
+<ul>
+<li>oneline：每个提交放在一行</li>
+<li>format:&quot;%s%H&quot;：通过定制format字符串显示内容
+<ul>
+<li>%H：提交的完整哈希字符串</li>
+<li>%h：提交的简短哈希字符串</li>
+<li>%an：作者名字</li>
+<li>%ae：作者email</li>
+<li>%ad：作者修订日期</li>
+<li>%ar：作者修订日期，按多久以前的方式显示</li>
+<li>%cn：提交者的名字</li>
+<li>%ce：提交者电子邮件</li>
+<li>%cd：提交日期</li>
+<li>%cr：提交日期</li>
+<li>%s：提交说明</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>--graph</code>选项形象的展示出分支和合并历史</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/20210206131012.png" alt="git log的常用选项一" /></p>
+<p><img src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/20210206131605.png" alt="git log的常用选项二" /></p>
+<h3 id="撤销操作"><a class="markdownIt-Anchor" href="#撤销操作"></a> 撤销操作</h3>
+<p>在Git中，有少数几个可以撤销操作的地方：</p>
+<ul>
+<li>在刚刚提交完之后，若发现存在某些文件没有添加或者提交信息写错，可以在添加完文件后，通过<code>git commit --amend</code>选项进行补充提交，这次提交会覆盖之前的提交</li>
+<li>通过<code>git reset HEAD &lt;file&gt;</code>命令或者<code>git restore --staged &lt;file&gt;</code>可以取消已经处在暂存区的文件，该文件变为已修改未暂存的装填</li>
+<li>通过<code>git checkout -- &lt;file&gt;</code>命令可以将前一次提交的file覆盖到当前工作目录中的文件</li>
+</ul>
+<p><strong>注意：在Git中任何已提交的东西几乎总是可以被恢复，但是任何未提交的内容很可能永久丢失</strong></p>
+<h3 id="远程仓库"><a class="markdownIt-Anchor" href="#远程仓库"></a> 远程仓库</h3>
+<p>远程仓库是指托管在因特网或其他网络中的项目的版本库，与他人协作涉及推送或拉取数据。</p>
+<ul>
+<li>通过<code>git remote</code>命令，可以输出每一个远程服务器的简写，通过克隆操作建立联系的远程仓库的默认名字是<code>origin</code>
+<ul>
+<li>添加<code>-v</code>选项后，会显示出远程仓库的URL</li>
+<li>通过<code>git remote add &lt;shortname&gt; &lt;url&gt;</code>命令可以添加一个新的远程Git仓库，并指定简写</li>
+<li>通过远程服务器的简写可以替代其URL</li>
+<li>通过<code>git remote show &lt;sn&gt;</code>可以查看一个远程仓库的全部信息</li>
+<li>通过<code>git remote rename &lt;old-n&gt; &lt;new-n&gt;</code>可以重命名远程仓库</li>
+<li>通过<code>git remote rm &lt;sn&gt;</code>可以删除远程仓库</li>
+</ul>
+</li>
+<li>通过<code>git fetch &lt;remote-name&gt;</code>命令可以从远程仓库获取数据，包括<strong>所有分支</strong>的引用和数据</li>
+<li>通过<code>git push &lt;remote-name&gt; &lt;branch-name&gt;</code>命令可以将本地分支推送到远程服务器
+<ul>
+<li>这条命令的前提是具有写入权限且之前无人推送，否则需要先将分支拉取、合并后再推送</li>
+</ul>
+</li>
+</ul>
+<h3 id="标签"><a class="markdownIt-Anchor" href="#标签"></a> 标签</h3>
+<p>Git可以给某一个提交打上标签，以作提示或者标记发布节点/版本。</p>
+<ul>
+<li>通过<code>git tag</code>命令列出所以已有的标签</li>
+</ul>
+<p>在Git中，存在两种标签：轻量标签和附注标签</p>
+<ul>
+<li>轻量标签：只是一个特定提交的<strong>引用</strong>
+<ul>
+<li>通过<code>git tag tag-name</code>创建轻量标签</li>
+</ul>
+</li>
+<li>附注标签：一个完整对象，可被校验，包含打标签者的名字、电子邮件地址、日期时间和标签信息，还可以通过GPG(GNU Privacy Guard)签名与验证
+<ul>
+<li>通过<code>git tag -a tag-name -m tag-desc</code>命令创建一个附注标签</li>
+<li>通过<code>git tag -a tag-name -m tag-desc checksum</code>对历史的提交打标签，需要提供校验和或部分校验和</li>
+<li>通过<code>git show tag-name</code>查看标签信息和对应的提交信息</li>
+</ul>
+</li>
+</ul>
+<p>默认情况下，<code>git push</code>命令不会将标签传送到远程服务器，通过<code>git push sn tag-name</code>显式推送标签到共享服务器，或者使用 --tags推送全部标签信息</p>
+<h3 id="别名"><a class="markdownIt-Anchor" href="#别名"></a> 别名</h3>
+<p>Git不会自动推断你输入的命令，为了提高效率，可以通过<code>git config</code>命令为每一个命令设置别名</p>
+<ul>
+<li><code>git config --global alias.co checkout</code>，则<code>git co相当于git commit</code></li>
+<li><code>git config --global alias.unstage 'reset HEAD --'</code>，则<code>git unstage</code>可以取消暂存</li>
+<li><code>git config --global alias.visual '!gitk'</code>，命令前加!表示不是Git子命令，是外部命令</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">YSY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-I-%E5%9F%BA%E7%A1%80/">https://ysyin.github.io/技术/工具技能/Git-I-基础/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND (署名-非商业性使用-禁止演绎) 4.0</a> 许可协议，仅限于个人学习使用。 此外，本博客部分文章内容可能参考、摘录自相关书籍、论文、网站，其版权归原作者所有。</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/8.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/%E5%85%B3%E4%BA%8E%E5%9B%9E%E5%AE%B6%E8%BF%87%E5%B9%B4/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/9.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">关于回家过年</div></div></a></div></nav></article></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/8.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2021 By YSY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Love Tech || Love Life</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon_piao" mobile="false" src="/js/third-party/piao.js"></script></div></body></html>
