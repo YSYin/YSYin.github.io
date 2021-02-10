@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Git III: Github | YLog</title><meta name="description" content="本文介绍如何高效地使用Github。"><meta name="author" content="YSY"><meta name="copyright" content="YSY"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/v.png"><link rel="canonical" href="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-III-Github/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Git III: Github"><meta property="og:url" content="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-III-Github/"><meta property="og:site_name" content="YLog"><meta property="og:description" content="本文介绍如何高效地使用Github。"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/11.jpg"><meta property="article:published_time" content="2021-02-10T03:47:22.000Z"><meta property="article:modified_time" content="2021-02-10T03:49:41.878Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '天',
+  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+    },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-02-10 11:49:41'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="https://at.alicdn.com/t/font_2055952_a63l0o7wd5p.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/css/custom_font.css"><meta name="generator" content="Hexo 5.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">10</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-zhuye"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-shijianzhou1"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-ziyuan"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa-fw iconfont icon-C"></i><span> 编程语言</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fa-fw iconfont icon-kuailianshishujujiegoucopy-1"></i><span> 数据结构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/"><i class="fa-fw iconfont icon-suanfaguanli"></i><span> 算法设计</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84/"><i class="fa-fw iconfont icon-yingjian3"></i><span> 硬件架构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="fa-fw iconfont icon-caozuoxitong"></i><span> 操作系统</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"><i class="fa-fw iconfont icon-wangluo2"></i><span> 网络技术</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/"><i class="fa-fw iconfont icon-git"></i><span> 工具技能</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E9%A3%8E%E6%A0%BC%E7%B4%A0%E5%85%BB/"><i class="fa-fw iconfont icon-fengge3"></i><span> 风格素养</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%A6%E8%83%BD%E5%8A%9B/"><i class="fa-fw iconfont icon-ic_shuxue"></i><span> 数学能力</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="fa-fw iconfont icon-shenjingwangluo"></i><span> 机器学习</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-xuexi"></i><span> 学习相关</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E4%BD%9C%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-gongzuo"></i><span> 工作相关</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-shenghuo2"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/"><i class="fa-fw iconfont icon-yuedu"></i><span> 阅读</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9F%B3%E4%B9%90/"><i class="fa-fw iconfont icon-yinle1"></i><span> 音乐</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E5%BD%B1%E8%A7%86/"><i class="fa-fw iconfont icon-yingshi2"></i><span> 影视</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%85%E8%A1%8C/"><i class="fa-fw iconfont icon-lvhang2"></i><span> 旅行</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E7%AC%94/"><i class="fa-fw iconfont icon-lanmulvshisuibi"></i><span> 随笔</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"><i class="fa-fw iconfont icon-yinsi"></i><span> 日记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie2"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyu2"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text"> 准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.</span> <span class="toc-text"> 基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text"> 创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text"> 提交代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh"><span class="toc-number">4.1.</span> <span class="toc-text"> SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pushpull"><span class="toc-number">4.2.</span> <span class="toc-text"> PUSH&amp;PULL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#forkpull-requests"><span class="toc-number">5.</span> <span class="toc-text"> Fork+Pull Requests</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/11.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">YLog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw iconfont icon-zhuye"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw iconfont icon-shijianzhou1"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-ziyuan"></i><span> 技术</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"><i class="fa-fw iconfont icon-C"></i><span> 编程语言</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><i class="fa-fw iconfont icon-kuailianshishujujiegoucopy-1"></i><span> 数据结构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/"><i class="fa-fw iconfont icon-suanfaguanli"></i><span> 算法设计</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84/"><i class="fa-fw iconfont icon-yingjian3"></i><span> 硬件架构</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="fa-fw iconfont icon-caozuoxitong"></i><span> 操作系统</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/"><i class="fa-fw iconfont icon-wangluo2"></i><span> 网络技术</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/"><i class="fa-fw iconfont icon-git"></i><span> 工具技能</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E9%A3%8E%E6%A0%BC%E7%B4%A0%E5%85%BB/"><i class="fa-fw iconfont icon-fengge3"></i><span> 风格素养</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E5%AD%A6%E8%83%BD%E5%8A%9B/"><i class="fa-fw iconfont icon-ic_shuxue"></i><span> 数学能力</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"><i class="fa-fw iconfont icon-shenjingwangluo"></i><span> 机器学习</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-xuexi"></i><span> 学习相关</span></a></li><li><a class="site-page" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E4%BD%9C%E7%9B%B8%E5%85%B3/"><i class="fa-fw iconfont icon-gongzuo"></i><span> 工作相关</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw iconfont icon-shenghuo2"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%98%85%E8%AF%BB/"><i class="fa-fw iconfont icon-yuedu"></i><span> 阅读</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9F%B3%E4%B9%90/"><i class="fa-fw iconfont icon-yinle1"></i><span> 音乐</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E5%BD%B1%E8%A7%86/"><i class="fa-fw iconfont icon-yingshi2"></i><span> 影视</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%85%E8%A1%8C/"><i class="fa-fw iconfont icon-lvhang2"></i><span> 旅行</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E9%9A%8F%E7%AC%94/"><i class="fa-fw iconfont icon-lanmulvshisuibi"></i><span> 随笔</span></a></li><li><a class="site-page" href="/categories/%E7%94%9F%E6%B4%BB/%E6%97%A5%E8%AE%B0/"><i class="fa-fw iconfont icon-yinsi"></i><span> 日记</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw iconfont icon-youqinglianjie2"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw iconfont icon-guanyu2"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Git III: Github</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-10T03:47:22.000Z" title="发表于 2021-02-10 11:47:22">2021-02-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-10T03:49:41.878Z" title="更新于 2021-02-10 11:49:41">2021-02-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/">工具技能</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>Github是通过Git进行版本控制的软件源代码托管服务平台，很多开源项目使用Github进行Git托管、问题追踪、代码审查等诸多操作，Github也是当前最大的开源社区，通过Github我们可以学习优秀的开源项目、进行多人协作项目等等。基于<strong>Pro Git 2</strong>和<strong>stormzhang的从0开始学习Github</strong>，本文将介绍如何高效的使用Github。</p>
+<h2 id="准备"><a class="markdownIt-Anchor" href="#准备"></a> 准备</h2>
+<p>首先，我们需要注册一个Github账号，并进行相关配置，过程不再赘述，按照提示操作即可。</p>
+<h2 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h2>
+<ul>
+<li>Repository：仓库，即在Github上开源的项目</li>
+<li>Issue：问题，即其他用户对某个项目提出的问题、bug或者改进建议</li>
+<li>Star：点赞，其他用户对项目表示赞赏和支持</li>
+<li>Fork：派生，其他用户如想对你的项目进行贡献，则需要先对项目进行派生，也就是把该项目复制一份副本，然后就可以做出自己的改进</li>
+<li>Pull Request：归并请求，在其他用户Fork并做出改进后，用户就可以向项目的作者提出归并请求，即请求原作者把自己的改进合并到原项目中（<strong>注</strong>：Pull Request的中文释义是一个很有趣的问题，单纯从Pull+Request的角度似乎无法透彻的表达其“合并请求”的含义，知乎上有一个问题对此进行了讨论（<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21682976%EF%BC%89%EF%BC%8C%E4%B8%80%E7%A7%8D%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E8%BE%83%E5%BC%BA%E7%9A%84%E7%90%86%E8%A7%A3%E6%98%AF%EF%BC%9ARequest">https://www.zhihu.com/question/21682976），一种可解释性较强的理解是：Request</a> the Project Owner to Pull my Modification，即向项目作者发送请求，该请求是让其合并自己所作的修改）</li>
+<li>Watch：观察，对项目进行Watch后，该项目进行任何更新你都会收到项目的通知提醒</li>
+</ul>
+<h2 id="创建项目"><a class="markdownIt-Anchor" href="#创建项目"></a> 创建项目</h2>
+<p>通过导航栏的**<code>＋</code><strong>下的</strong><code>New repository</code><strong>选项，可以创建一个项目仓库。创建项目需要填写项目名称、项目描述（可选），然后选择项目是Public（所有人都可见）和Private（指定部分人可见）属性，并勾选是否添加</strong><code>README</code><strong>文件、是否添加</strong><code>.gitignore</code>**文件、是否添加项目协议，然后就可创建一个你自己的项目仓库Repository。</p>
+<h2 id="提交代码"><a class="markdownIt-Anchor" href="#提交代码"></a> 提交代码</h2>
+<h3 id="ssh"><a class="markdownIt-Anchor" href="#ssh"></a> SSH</h3>
+<p>任何人都可以自由的下载Github上的所有Public项目仓库；拥有Github账号后，用户可以选择创建自己的项目；通过授权机制，用户可以向自己有权限的仓库上传代码。在Github中，这种授权机制一般通过SSH实现。</p>
+<p>SSH（Secure Shell）是一种网络协议，用于计算机之间的远程加密登录。SSH一般的登陆过程是：</p>
+<ul>
+<li>用户发起登录请求</li>
+<li>远程主机收到用户的登陆请求，把自己的公钥发给用户</li>
+<li>用户收到公钥后，将登录密码加密，返回给远程主机</li>
+<li>远程主机用自己的私钥，解密登录密码，并与数据库进行比对，若密码正确，则同意登录</li>
+</ul>
+<p>为了防备中间人攻击（即攻击者伪装成远程主机向用户发送自己的公钥），在第一次登录远程主机时，SSH会向用户输出提示，告知用户主机公钥的MD5指纹，让用户自行判断该公钥是否可以信任，如果可以信任，则按上述步骤进行登录。</p>
+<p>通过上述机制，用户每次都需要输入用户名和密码，较为繁琐，因此，SSH提供一种免密登陆方法：</p>
+<ul>
+<li>用户在自己的客户机上生成一份公钥和私钥（或以前已经具有的）</li>
+<li>用户将自己的公钥存储到远程主机上</li>
+<li>用户发起登陆请求</li>
+<li>远程主机收到登陆请求，向用户发送一段随机字符串</li>
+<li>用户收到字符串，用自己的私钥加密后返回给远程主机</li>
+<li>远程主机用自己之前存储的用户公钥解密字符串，如果解密后和原字符串相同，则说明用户可信，同意登录</li>
+</ul>
+<p>在Linux或者MinGW上，通过**<code>ssh-keygen -t rsa</code>**命令，用户可以生成一份自己的公钥和私钥（一般来说主机上的一个用户只能有一份公私钥），并存储在<code>$HOME/.ssh$</code>目录内，分别命名为<code>id_rsa.pub(公钥)和id_rsa(私钥)</code>，在生成公私钥时，可以选择是否对私钥设置口令<code>passphrase</code>，即只有输入该口令的用户才能获得私钥的使用权（输入口令后较长一段时间内都可获得私钥的使用权）</p>
+<p>为了在提交代码时进行免密登陆，我们可以将自己主机的公钥添加到Github中，通过设置=&gt;SSH and GPG keys=&gt;New SSH key即可添加公钥</p>
+<h3 id="pushpull"><a class="markdownIt-Anchor" href="#pushpull"></a> PUSH&amp;PULL</h3>
+<p>根据Git I-II中所述的内容，我们通过<code>git push</code>和<code>git pull</code>指令与远程仓库分支进行数据交换，push和pull会自动通过SSH进行免密登陆。</p>
+<p><strong>注意</strong>：Github中传输文件的协议一般有两种：HTTPS和SSH，以上的SSH免密登陆仅适用于通过SSH方式传输文件，即remote的url为<code>git@github.com:</code>格式</p>
+<p>Github中SSH协议和HTTPS协议的区别可以参考这篇博客https://blog.cuiyongjian.com/engineering/git-https-ssh/</p>
+<h2 id="forkpull-requests"><a class="markdownIt-Anchor" href="#forkpull-requests"></a> Fork+Pull Requests</h2>
+<p>如果你想要参与某个项目，但是没有推送权限，此时可以选择<strong>Fork</strong>项目，<strong>Fork</strong>操作会在你的空间中创建一个项目副本，并且你对项目具有推送权限，此时，你可以将修改推送到项目副本中，并通过创建合并请求(<strong>Pull Request</strong>)来使改动进入源版本库，创建合并请求后，就会开启一个可供审查代码的版块，项目的拥有者和贡献者可以在此讨论相关修改，直到项目拥有者对其感到满意，并且将这些修改合并到版本库。</p>
+<p>Github设计了一个以合并请求为中心的特殊合作流程：</p>
+<ul>
+<li>从项目副本的<code>master</code>分支中创建一个新分支</li>
+<li>提交一些修改改进项目</li>
+<li>将该分支推送到Github上</li>
+<li>创建一个合并请求Pull Request</li>
+<li>讨论，根据实际情况继续修改</li>
+<li>项目的拥有者合并或关闭你的合并请求</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">YSY</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ysyin.github.io/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-III-Github/">https://ysyin.github.io/技术/工具技能/Git-III-Github/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND (署名-非商业性使用-禁止演绎) 4.0</a> 许可协议，仅限于个人学习使用。 此外，本博客部分文章内容可能参考、摘录自相关书籍、论文、网站，其版权归原作者所有。</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Git/">Git</a><a class="post-meta__tags" href="/tags/Github/">Github</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/11.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E6%8A%80%E8%83%BD/Git-II-%E5%88%86%E6%94%AF/"><img class="next-cover" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/10.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Git II: 分支</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/技术/工具技能/Git-II-分支/" title="Git II: 分支"><img class="cover" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/10.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-07</div><div class="title">Git II: 分支</div></div></a></div><div><a href="/技术/工具技能/Git-I-基础/" title="Git I: 基础"><img class="cover" src="https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/3.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-06</div><div class="title">Git I: 基础</div></div></a></div></div></div></article></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/YSYin/YLogCDN@latest/img/11.jpg)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2021 By YSY</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Tech || Life</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var endLoading = function () {
+  document.body.style.overflow = 'auto';
+  document.getElementById('loading-box').classList.add("loaded")
+}
+window.addEventListener('load',endLoading)</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon_piao" mobile="false" src="/js/third-party/piao.js"></script></div></body></html>
